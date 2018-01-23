@@ -1,11 +1,14 @@
 **React-Redux and Connecting React Components to the Redux world**
 
-1. Your Root component is the top of your application.
-2. The Root wraps your App component with the react-redux Provider
+1. Your `Root` component is the top of your application. This is the
+   component you render in the page's on ready callback defined in
+   your entry Javascript file.
+2. The `Root` wraps your App component with the react-redux Provider
    component.
-    1. The Provider component will magically let connected components
-       use the store.
-3. The App component uses your application components to build the page.
+    1. The `Provider` component will magically let connected
+       components use the store.
+3. The `App` component uses your application components to build the
+   page.
 4. There are two main ways for a component to get props:
     1. It receives props in the JSX: `<CatsList cats={listOfAllCats}
        />`. This is the normal way.
