@@ -24,7 +24,7 @@
     1. When `connect` defines the `CatsListContainer` class, it gives
        the container `mapStateToProps`.
     2. The container also has direct access to the store:
-       `catsListContainer.context.store.`
+       `catsListContainer.context.store.getState().`
     3. The container uses `mapStateToProps` to produce the properties to
        pass to the wrapped `CatsList` class.
     4. `mapStateToProps` will return an object with the format `{
@@ -44,22 +44,27 @@
    to update
     1. Very similar to `mapStateToProps`. `connect` gives
        `CatsListContainer` `mapDispatchToProps`.
-    2. The container has direct access to the dispatch function:
+    2. The container has direct access to the dispatch function
+       because it has access to the store:
        `catsListContainer.context.store.dispatch`.
-    3. The wrapped component CatsList wants to be able to send actions
+    3. The wrapped component `CatsList` wants to be able to send actions
        like `receiveCat(submittedFormCatObject)`.
-    4. To let this happen, mapStateToProps is a function that takes in
-       `dispatch`, and produces an object of key value pairs, as
-       before.
-    5. These become properties of the CatsList as before.
-    6. The only difference is the *values*. These are functions. A
-       function like `receiveCat` will use the dispatch function from
-       `mapDispatchToProps`.
-    7. `receiveCats(submittedFormCatObject)` will be defined as
+    4. To let this happen, `mapDispatchToProps` is a function that
+       takes in `dispatch`, and produces an object of key value pairs,
+       just like `mapStateToProps` did. Only difference is `dispatch`
+       is passed, rather than `state`.
+    5. These become properties of the `CatsList` as before. `CatsList`
+       can use these. It can also pass them further down into other
+       components.
+    6. The values of the `mapDispatchToProps` object are functions. A
+       function like `receiveCat` will use the `dispatch` function
+       passed into `mapDispatchToProps`.
+    7. For instance, `receiveCats(submittedFormCatObject)` will be
+       defined as
        `dispatch(cat_actions.receiveCats(submittedFormCatObject))`.
-    8. The receiveCats property thus (1) produces the action, and (2)
-       gives the action to dispatch.
+    8. The `receiveCats` property thus (1) produces the action, and
+       (2) gives the action to `dispatch`.
 8. Nowhere else in the React world will anyone access the store, or
-   use the dispatch function. Only in mapStateToProps and
-   mapDispatchToProps for a container component. These are the bridge
-   between the worlds.
+   use the dispatch function. Only in `mapStateToProps` and
+   `mapDispatchToProps` for a container component created via
+   `connect`. These are the bridge between the worlds.
